@@ -5,15 +5,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D playerRb;
+    public Points pointBar;
+
+    // Some bools for jumping and using TimeHacking!
     bool playerGrounded;
-    bool gotTimeMachine;
+    [SerializeField] private bool gotTimeMachine;
+
     public float jumpForce = 5.0f;
     public float speed = 5.0f;
+    private int score = 0;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         gotTimeMachine = false;
+        pointBar.SetPoints(score);
+
     }
 
     // Update is called once per frame
@@ -24,30 +31,46 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
+        // basic movin left and right
         float horizontal = Input.GetAxis("Horizontal");
         
+        //velocity
         playerRb.velocity = new Vector2(horizontal * speed, playerRb.velocity.y);
         
+
+        // JUMP!
         if(Input.GetKeyDown("space")&&playerGrounded)
         {
             playerGrounded = false;
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
         }
+
+        //Use time machine!
+        if(Input.GetKeyDown(KeyCode.LeftShift)&&gotTimeMachine)
+        {
+            //Use time machine declared in other script! Lets back to the future!
+        }
     }
+    //check if we are grounded (yeap, we gonna jump like Prince of Persia)
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Floor")) { playerGrounded = true; }
-    
-        if (other.gameObject.CompareTag("Coin")) 
-        { 
-            Destroy(other.gameObject);
-            Debug.Log("Piniondz!");
-        }
-        if (other.gameObject.CompareTag("Time"))
-        {
-            Destroy(other.gameObject);
-            Debug.Log("Lets hack time!");
-            gotTimeMachine = true;
-        }
+
+        
     }
+
+
+    public void Score(float score)
+    {
+        
+        pointBar.SetPoints(score);
+        
+    }
+    public void TimeMachine(bool nGotTimeMachine)
+    {
+        gotTimeMachine = nGotTimeMachine;
+        Debug.Log("Got time machine!! COoooool");
+    }
+
+
 }
