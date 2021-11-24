@@ -7,13 +7,13 @@ public class Points : MonoBehaviour
     public Slider slider;
     
 
-
     public void SetPoints(float point)
     {
-        
-        float count = gameManager.pointCount;
-        
-        slider.value = (point / count);
 
+        float count = gameManager.pointCount;
+        if (count!=0)
+         {
+            slider.value = point / count;
+         }
     }
 }

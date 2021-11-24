@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D playerRb;
     public Points pointBar;
+    public TimeMachine timeMachine;
 
     // Some bools for jumping and using TimeHacking!
     bool playerGrounded;
@@ -46,9 +47,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //Use time machine!
-        if(Input.GetKeyDown(KeyCode.LeftShift)&&gotTimeMachine)
+        if(gotTimeMachine)
         {
-            //Use time machine declared in other script! Lets back to the future!
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                timeMachine.StartRewind();
+            }
+            if(Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                timeMachine.StopRewind();
+            }
         }
     }
     //check if we are grounded (yeap, we gonna jump like Prince of Persia)
@@ -69,7 +77,7 @@ public class PlayerController : MonoBehaviour
     public void TimeMachine(bool nGotTimeMachine)
     {
         gotTimeMachine = nGotTimeMachine;
-        Debug.Log("Got time machine!! COoooool");
+        // Msg "Lets Hack a time!!
     }
 
 
