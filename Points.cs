@@ -5,7 +5,11 @@ public class Points : MonoBehaviour
 {
     public GameManager gameManager;
     public Slider slider;
-    
+
+    private void Start()
+    {
+        //DontDestroyOnLoad(this.gameObject);
+    }
 
     public void SetPoints(float point)
     {
